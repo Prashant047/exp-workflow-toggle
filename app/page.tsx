@@ -110,7 +110,7 @@ function NestedToggle({ children, workFlowType }: NestedToggleProp){
       <div className="grid grid-cols-[30px_1fr] gap-2 ">
         <div 
           onClick={() => setExpanded(prev => !prev)}
-          className='cursor-pointer'
+          className='cursor-pointer min-h-[30px]'
         >
           {expanded ? (
             <motion.div whileTap={{scale:0.95}} className='group flex flex-col items-center h-full text-green-500'>
@@ -139,7 +139,7 @@ function NestedToggle({ children, workFlowType }: NestedToggleProp){
           )}
         </div>
         <div className={`transition-all ease-[cubic-bezier(0.32,0.72,0,1)] duration-300 grid ${expanded?'grid-rows-[1fr] opacity-100':'grid-rows-[0fr] opacity-0'} overflow-hidden`}>
-          <div className='overflow-hidden flex flex-col gap-1 mb-4'>
+          <div className='overflow-hidden flex flex-col gap-1 mb-3'>
             {children}
           </div>
         </div>
