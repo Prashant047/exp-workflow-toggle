@@ -43,12 +43,12 @@ const workflowBlockMap = {
 
 export default function Home() {
   return (
-    <main className="mx-auto my-10 max-w-2xl border-2 rounded-lg bg-blue-50 p-4">
+    <main className="mx-2 sm:mx-auto my-10 max-w-2xl border-2 rounded-lg bg-blue-50 p-4">
       <div className='flex flex-col gap-1'>
-        <NestedToggle workFlowType='check'>
-          <NestedToggle workFlowType='match'>
-            <NestedToggle workFlowType='runWorkflow'>
-              <NestedToggle workFlowType='message'>
+        <NestedToggle workFlowType='check' expanded>
+          <NestedToggle workFlowType='match' expanded>
+            <NestedToggle workFlowType='runWorkflow' expanded>
+              <NestedToggle workFlowType='message' expanded>
                 <div className='border border-neutral-400 rounded-lg overflow-hidden'>
                   <ul className='flex bg-neutral-300 text-neutral-500 uppercase text-xs font-bold gap-3 p-2'>
                     <li>template</li>
@@ -56,7 +56,7 @@ export default function Home() {
                     <li>emoji</li>
                     <li>medial</li>
                   </ul>
-                  <textarea className='h-32 w-full p-3 text-xs outline-none block' />
+                  <textarea className='h-32 w-full p-3 text-xs outline-none block' name='message' />
                 </div>
               </NestedToggle>
             </NestedToggle>
@@ -85,17 +85,18 @@ export default function Home() {
 
 interface NestedToggleProp {
   children: React.ReactNode,
-  workFlowType: string
+  workFlowType: string,
+  expanded?: boolean
 }
 
-function NestedToggle({ children, workFlowType }: NestedToggleProp){
-  const [expanded, setExpanded] = useState<boolean>(false);
+function NestedToggle({ children, workFlowType, expanded:initialExpanded = false }: NestedToggleProp){
+  const [expanded, setExpanded] = useState<boolean>(initialExpanded);
   // @ts-ignore
   const { title, icon, color } = workflowBlockMap[workFlowType];
 
   return (
     <div>
-      <div className="flex-1 p-2 flex gap-1 items-center bg-neutral-50 rounded-lg shadow mb-2" style={{color: color}} >
+      <div className="flex-1 p-2 flex gap-1 items-center bg-neutral-50 rounded-lg shadow mb-2" style={{color}} >
         <span>{icon}</span>
         <span className='text-xs font-bold uppercase'>{title}</span>
         <motion.button 
@@ -115,13 +116,13 @@ function NestedToggle({ children, workFlowType }: NestedToggleProp){
           {expanded ? (
             <motion.div whileTap={{scale:0.95}} className='group flex flex-col items-center h-full text-green-500'>
               <div className='transition-all duration-100 grid grid-rows-[0fr] group-hover:grid-rows-[1fr]'>
-                <span className='overflow-hidden' style={{color: color}}>
+                <span className='overflow-hidden' style={{color}}>
                   <ArrowDownToLine size={15}/>
                 </span>
               </div>
               <div className='transition-all duration-75  flex-1 group-hover:w-[2px] w-[1px] rounded-full' style={{backgroundColor: color}}></div>
               <div className='transition-all duration-100  grid grid-rows-[0fr] group-hover:grid-rows-[1fr]'>
-                <span className='overflow-hidden' style={{color: color}}>
+                <span className='overflow-hidden' style={{color}}>
                   <ArrowUpToLine  size={15}/>
                 </span>
               </div>
